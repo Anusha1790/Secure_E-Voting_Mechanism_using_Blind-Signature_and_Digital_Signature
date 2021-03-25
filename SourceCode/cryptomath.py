@@ -114,9 +114,3 @@ def findPrime(bits=1024, tries=10000):
         if isPrime(n):
             return n
     return None
-    
-
-
-
-    
-    

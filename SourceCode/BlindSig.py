@@ -15,16 +15,16 @@ class Signer:
         n = p*q
         
         print('\n\n') 
-        for i in range(75):
+        for i in range(40):
             print(" ", end="")
         print("\u001b[1mBlind Signatures and Voting Scheme (using RSA)\u001b[0m")
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print()    
-        for i in range(100):
+        for i in range(50):
             print(" ", end="")
         print("\u001b[31mMODULE 1\u001b[37m")
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print('\n\n')    
       
@@ -32,7 +32,7 @@ class Signer:
         print("\u001b[35;1m(a) Generates random p and q\u001b[0m", end='\n\n')
         print("\u001b[33;1mp: \u001b[0m", p, end='\n\n')
         print("\u001b[33;1mq: \u001b[0m", q, end='\n\n')
-        print("\u001b[35;1m(b) Computes n=p*q and ϕ(n)=(p-1)(n-1)\u001b[0m", end='\n\n')
+        print("\u001b[35;1m(b) Computes n=p*q and ϕ(n)=(p-1)(q-1)\u001b[0m", end='\n\n')
         print("\u001b[33;1mn: \u001b[0m", n, end='\n\n')
         print("\u001b[33;1mϕ(n): \u001b[0m", phi, end='\n\n')
     
@@ -80,24 +80,24 @@ class Signer:
     def signMessage(self, message, eligible):
         
         print('\n\n')
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print()    
-        for i in range(100):
+        for i in range(50):
             print(" ", end="")
         print("\u001b[31mMODULE 3\u001b[37m")
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print('\n\n')   
         
-        print("\u001b[32;1m3. Signing Authority Authorizes Ballot\u001b[0m")
-        print("\u001b[35;1m(a) Signing authority receives m'\u001b[0m")
-        print("\u001b[35;1m(b) Signing authority verifies whether voter is eligible to vote\u001b[0m")
+        print("\u001b[32;1m3. Signing Authority Authorizes Ballot\u001b[0m", end='\n\n')
+        print("\u001b[35;1m(a) Signing authority receives m'\u001b[0m", end='\n\n')
+        print("\u001b[35;1m(b) Signing authority verifies whether voter is eligible to vote\u001b[0m", end='\n\n')
         if eligible == "y":
-            print("\u001b[35;1m(c) If voter is eligible, signing authority signs ballot: sign = ((blinded message)^d)mod n (where d is the secret exponent of the signing authority)\u001b[0m")
-            s= pow(message, self.privateKey['d'], self.publicKey['n']) #important
-            print("Sign by Signing Authority: ", s)
-            print("\u001b[35;1m(d) Sends s' back to voter\u001b[0m")
+            print("\u001b[35;1m(c) If voter is eligible, signing authority signs ballot: sign = ((blinded message)^d)mod n = ((m* (r^e))^d) mod n = (m^d * r^(ed)) mod n = (m^d * r^1) mod n = (m^d * r) mod n(where d is the private key of the signing authority)\u001b[0m", end='\n\n')
+            s= pow(message, self.privateKey['d'], self.publicKey['n']) #important # ERR1
+            print("\u001b[33;1mSign by Signing Authority: \u001b[0m", s, end='\n\n')
+            print("\u001b[35;1m(d) Sends s' back to voter\u001b[0m", end='\n\n')
             return s
         else:
             return None
@@ -127,33 +127,33 @@ class Voter:
     
     def unwrapSignature(self, signedBlindMessage, n):
         print('\n\n')
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print()    
-        for i in range(100):
+        for i in range(50):
             print(" ", end="")
         print("\u001b[31mMODULE 4\u001b[37m")
-        for i in range(200):
+        for i in range(100):
             print("-", end="")
         print('\n\n')
-        print("\u001b[32;1m4. Voter Unwraps Blinding of Ballot\u001b[0m")
-        print("\u001b[35;1m(a) Receives s'\u001b[0m")
+        print("\u001b[32;1m4. Voter Unwraps Blinding of Ballot\u001b[0m", end='\n\n')
+        print("\u001b[35;1m(a) Receives s'\u001b[0m", end='\n\n')
         
-        print("\u001b[35;1m(g) Computes rInv, where rInv is the inverse of r modulo n. r will be used by voter to unwrap the blinded message.\u001b[0m")
-        rInv = cryptomath.findModInverse(self.r, n)
+        print("\u001b[35;1m(g) Computes rInv, where rInv is the inverse of r modulo n. r will be used by voter to unwrap the blinded message.\u001b[0m", end='\n\n')
+        rInv = cryptomath.findModInverse(self.r, n) # ERR3
         print("rInv: ", rInv)
          
         print()    
-        print("Checking whether r * rInv mod n is 1 (which is the required condition for rInv to be inverse of r mod n):")
+        print("\u001b[33;1mChecking whether r * rInv mod n is 1 (which is the required condition for rInv to be inverse of r mod n): \u001b[0m")
         print(self.r, "*", rInv, "mod", n,'\n' ,"=", self.r*rInv % n, end='\n')
         v=False
         if (self.r*rInv % n)==1:
             v=True
-        print("Verification Status: ", v, end='\n\n')
-        print("\u001b[35;1m(b) Computes s = (s')*(rInv) mod n\u001b[0m")
+        print("\u001b[33;1mVerification Status: \u001b[0m", v, end='\n\n')
+        print("\u001b[35;1m(b) Computes s = (s')*(rInv) mod n = (m^d * r)*(rInv) mod n = (m^d * 1) mod n = (m^d) mod n \u001b[0m", end='\n\n')
         s = ((signedBlindMessage * rInv) % n)
-        print("Signed message, s: ", s)
-        print("\u001b[35;1m(c) Sends the signature s in to the ballot receiving location\u001b[0m")
+        print("\u001b[33;1mSigned message, s: \u001b[0m", s, end='\n\n')
+        print("\u001b[35;1m(c) Sends the signature s in to the ballot receiving location\u001b[0m", end='\n\n')
         return s
     
     
@@ -171,10 +171,8 @@ class Voter:
 def verifySignature(message, randNum, signature, publicE, publicN):
     ballot= pow(signature, publicE, publicN) #decrypting, it gets back the message_hash
     verificationStatus = (int(hashlib.sha256((str(message) + str(randNum)).encode('utf-8')).hexdigest(),16) == ballot)
-    print("Now the encrypted/signed hash message is decrypted with the signed authority's public key s^e%n = (m^d)^e%n = m%n :","\n", ballot, end="\n\n")
-    print("Now we calculate the hash of the concatenated message as hash(concatenated message): \n" ,int(hashlib.sha256((str(message) + str(randNum)).encode('utf-8')).hexdigest(),16))
-    print("If above 2 values are equal then it is established that the message has indeed been approved by the signing authority.")
+    print("\u001b[35;1mThe encrypted/signed hash message is decrypted with the signed authority's public key (s^e) mod n = (m^d)^e mod n = (m^1) mod n = m mod n = m : \u001b[0m","\n", ballot, end="\n\n")
+    print("\u001b[35;1mCalculate the hash of the concatenated message as hash(concatenated message): \n \u001b[0m" ,int(hashlib.sha256((str(message) + str(randNum)).encode('utf-8')).hexdigest(),16), end='\n\n')
+    print("\u001b[31mIf above 2 values are equal then it is established that the message has indeed been approved by the signing authority. \u001b[0m", end='\n\n')
     decoded_message = message
     return verificationStatus, decoded_message   
-
-        
