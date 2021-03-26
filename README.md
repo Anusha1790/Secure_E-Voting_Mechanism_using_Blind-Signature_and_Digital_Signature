@@ -28,7 +28,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 
 ## WORKING
 
-1. Signing Authority Creates Public and Private Information:
+######1. Signing Authority Creates Public and Private Information:
 
    (a) Generates random p and q
 
@@ -90,7 +90,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 ![Alt text](screenshots/DigitalSignatureAuthentication_2.png)
 
 
-2. Voter Prepares Ballot for getting signed by Signing Authority
+######2. Voter Prepares Ballot for getting signed by Signing Authority
 
     (a) Generates random x such that 1<=x<=n
 
@@ -111,7 +111,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 
 ![Alt text](screenshots/Module2_2.png)
 
-3. Voter Prepares Ballot for getting signed by Signing Authority
+######3. Voter Prepares Ballot for getting signed by Signing Authority
 
     (a) Generates random x such that 1<=x<=n
 
@@ -130,7 +130,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 ![Alt text](screenshots/Module3_1.png)
 
 
-4. Voter Unwraps Blinding of Ballot
+######4. Voter Unwraps Blinding of Ballot
 
     (a) The voter receives sign s'
 
@@ -151,7 +151,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 ![Alt text](screenshots/Module4_1.png)
 
 
-5. Ballot Received and its Verification 
+######5. Ballot Received and its Verification 
 
     A voter's vote on the ballot shall consist of the following: 
 
