@@ -26,7 +26,7 @@ A python-based implementation of an E-Voting application with the use of blind s
 
 - [Blind Signatures for Untraceable Payments](https://sceweb.sce.uhcl.edu/yang/teaching/csci5234WebSecurityFall2011/Chaum-blind-signatures.PDF)
 
-## WORKING
+## Working
 
 ###### 1. Signing Authority Creates Public and Private Information:
 
