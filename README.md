@@ -111,21 +111,21 @@ A python-based implementation of an E-Voting application with the use of blind s
 
 ![Alt text](screenshots/Module2_2.png)
 
-###### 3. Voter Prepares Ballot for getting signed by Signing Authority
+###### 3. Signing Authority Authorizes Ballot
 
-    (a) Generates random x such that 1<=x<=n
+    (a) Signing authority receives m'
 
-    (b) The voter chooses their favourite candidate, option, etc. on the ballot
+    (b) Signing authority verifies whether voter is eligible to vote
 
-    (c) Creates (concatenating) message: poll_answer + x and produces its hash, ie, hash(concatenated_message) denoted by m
+    (c) If voter is eligible, signing authority signs ballot: 
+        
+        sign = ((blinded message)^d)mod n 
+             = ((m* (r^e))^d) mod n 
+             = (m^d * r^(ed)) mod n 
+             = (m^d * r^1) mod n 
+             = (m^d * r) mod n    (where d is the private key of the signing authority)
 
-    (d) Generates r such that r is a relative prime n and 2<= r <=(n-1)
-
-    (e) Computes blinded message (disguises his message): 
-
-         m' = (m* (r^e)) mod n (where n and e are public knowledge)
-
-    (f) Sends m'(blinded message) to signing authority
+    (d) Sends s' back to voter
 
 ![Alt text](screenshots/Module3_1.png)
 
